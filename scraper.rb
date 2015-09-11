@@ -52,13 +52,16 @@ def scrape_person(url)
   data
 end
 
+start_url = 'http://www.congreso.gob.pe/plenaryassembly?K=364'
+data_url = 'http://www.congreso.gob.pe/members?m1_idP=6'
 agent = Mechanize.new
-headers = {'Referer' => 'http://www.congreso.gob.pe/plenaryassembly?K=364', 'Cookie' => 'frontend=vjcadhuk4q5ubar1ea6pl21si4'}
-url = 'http://www.congreso.gob.pe/members?m1_idP=6'
+
+page = agent.get(start_url)
+headers = {
+  'Referer' => start_url,
+  'Cookie' => page.header["set-cookie"]
+}
+
 agent.request_headers = headers
-
-page = agent.get(url)
-noko = Nokogiri::HTML(page.body)
-scrape_list(noko)
-
-
+page = agent.get(data_url)
+scrape_list(page.parser)
