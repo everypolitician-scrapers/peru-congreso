@@ -6,6 +6,7 @@ require 'nokogiri'
 require 'colorize'
 require 'pry'
 require 'cgi'
+require 'mechanize'
 
 
 class String
@@ -18,8 +19,7 @@ def noko_for(url)
   Nokogiri::HTML(open(url).read)
 end
 
-def scrape_list(url)
-  noko = noko_for(url)
+def scrape_list(noko)
   url = 'http://www.congreso.gob.pe/plenaryassembly' # for now
   noko.xpath('//table[@class="congresistas"]//tr[td]').each do |tr|
     tds = tr.css('td')
@@ -52,4 +52,13 @@ def scrape_person(url)
   data
 end
 
-scrape_list 'page.html'
+agent = Mechanize.new
+headers = {'Referer' => 'http://www.congreso.gob.pe/plenaryassembly?K=364', 'Cookie' => 'frontend=vjcadhuk4q5ubar1ea6pl21si4'}
+url = 'http://www.congreso.gob.pe/members?m1_idP=6'
+agent.request_headers = headers
+
+page = agent.get(url)
+noko = Nokogiri::HTML(page.body)
+scrape_list(noko)
+
+
