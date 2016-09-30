@@ -4,11 +4,11 @@
 
 source "https://rubygems.org"
 
-ruby "2.0.0"
+ruby "2.3.1"
 
 gem "scraperwiki", git: "https://github.com/openaustralia/scraperwiki-ruby.git", branch: "morph_defaults"
 gem "pry"
 gem "colorize"
 gem "nokogiri"
 gem 'mechanize'
-
+gem 'scraped_page_archive', git: 'https://github.com/everypolitician/scraped_page_archive'
