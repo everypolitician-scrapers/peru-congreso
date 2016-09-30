@@ -11,3 +11,4 @@ gem "pry"
 gem "colorize"
 gem "nokogiri"
 gem 'mechanize'
+gem 'scraped_page_archive', git: 'https://github.com/everypolitician/scraped_page_archive'
