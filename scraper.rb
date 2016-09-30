@@ -7,7 +7,7 @@ require 'colorize'
 require 'pry'
 require 'cgi'
 require 'mechanize'
-require 'scraped_page_archive/open-uri'
+
 
 class String
   def tidy
@@ -24,7 +24,7 @@ def scrape_list(noko)
   noko.xpath('//table[@class="congresistas"]//tr[td]').each do |tr|
     tds = tr.css('td')
     source = URI.join(url, tds[1].css('a/@href').text).to_s
-    data = {
+    data = { 
       id: CGI.parse(URI.parse(source).query)['id'].first,
       sort_name: tds[1].text.tidy,
       # faction: tds[2].text.tidy,
@@ -41,7 +41,7 @@ end
 
 def scrape_person(url)
   noko = noko_for(url)
-  data = {
+  data = { 
     name: noko.css('.nombres .value').text,
     party: noko.css('.grupo .value').text,
     faction: noko.css('.bancada .value').text,
