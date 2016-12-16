@@ -3,11 +3,9 @@
 
 require 'scraperwiki'
 require 'nokogiri'
-require 'colorize'
 require 'pry'
 require 'cgi'
 require 'mechanize'
-
 
 class String
   def tidy
